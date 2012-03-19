@@ -1,6 +1,6 @@
 <?php
 
-namespace KapitchiAddress;
+namespace KapitchiLocation;
 
 use     KapitchiBase\Module\ModuleAbstract;
 

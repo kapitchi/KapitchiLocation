@@ -1,6 +1,6 @@
 <?php
 
-namespace KapitchiAddress\Form;
+namespace KapitchiLocation\Form;
 
 use KapitchiBase\Form\Form;
 

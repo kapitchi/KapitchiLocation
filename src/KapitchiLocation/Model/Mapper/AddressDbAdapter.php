@@ -1,10 +1,10 @@
 <?php
 
-namespace KapitchiAddress\Model\Mapper;
+namespace KapitchiLocation\Model\Mapper;
 
 use     KapitchiBase\Mapper\DbAdapterMapper,
         KapitchiBase\Model\ModelAbstract,
-        KapitchiAddress\Model\Address as Model;
+        KapitchiLocation\Model\Address as Model;
 
 class AddressDbAdapter extends DbAdapterMapper {
     
