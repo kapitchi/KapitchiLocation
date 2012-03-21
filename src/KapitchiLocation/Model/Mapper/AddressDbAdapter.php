@@ -8,7 +8,7 @@ use     KapitchiBase\Mapper\DbAdapterMapper,
 
 class AddressDbAdapter extends DbAdapterMapper {
     
-    protected $tableName = 'address';
+    protected $tableName = 'location_address';
             
     public function persist(ModelAbstract $model) {
         if($model->getId()) {
