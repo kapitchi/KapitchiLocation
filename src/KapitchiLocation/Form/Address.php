@@ -2,7 +2,7 @@
 
 namespace KapitchiLocation\Form;
 
-use KapitchiBase\Form\Form;
+use ZfcBase\Form\Form;
 
 class Address extends Form {
     

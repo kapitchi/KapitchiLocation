@@ -2,9 +2,9 @@
 
 namespace KapitchiLocation\Model\Mapper;
 
-use     KapitchiBase\Mapper\DbAdapterMapper,
-        KapitchiBase\Model\ModelAbstract,
-        KapitchiLocation\Model\Address as Model;
+use ZfcBase\Mapper\DbAdapterMapper,
+    ZfcBase\Model\ModelAbstract,
+    KapitchiLocation\Model\Address as Model;
 
 class AddressDbAdapter extends DbAdapterMapper {
     

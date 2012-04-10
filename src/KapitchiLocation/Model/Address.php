@@ -2,7 +2,7 @@
 
 namespace KapitchiLocation\Model;
 
-use KapitchiBase\Model\ModelAbstract;
+use ZfcBase\Model\ModelAbstract;
 
 /**
  * http://opensocial-resources.googlecode.com/svn/spec/2.0.1/Social-Data.xml#Address
