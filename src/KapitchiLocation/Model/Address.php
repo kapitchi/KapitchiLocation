@@ -7,18 +7,16 @@ use ZfcBase\Model\ModelAbstract;
 /**
  * http://opensocial-resources.googlecode.com/svn/spec/2.0.1/Social-Data.xml#Address
  */
-class Address extends ModelAbstract {
+class Address extends ModelAbstract implements HasLatLngInterface {
     protected $id;
     protected $building;
-    protected $country;
     protected $floor;
     protected $latitude;
     protected $longitude;
-    protected $locality;
     protected $postalCode;
-    protected $region;
     protected $streetAddress;
-    //protected $type;//The address type or label. Examples include 'work', 'home'.
+    protected $note;
+    protected $divisionId;
     
     public function getId() {
         return $this->id;
@@ -34,15 +32,6 @@ class Address extends ModelAbstract {
 
     public function setBuilding($building) {
         $this->building = $building;
-    }
-
-    public function getCountry() {
-        return $this->country;
-    }
-
-    public function setCountry($country) {
-        //check country code here!
-        $this->country = $country;
     }
 
     public function getFloor() {
@@ -69,28 +58,12 @@ class Address extends ModelAbstract {
         $this->longitude = $longitude;
     }
 
-    public function getLocality() {
-        return $this->locality;
-    }
-
-    public function setLocality($locality) {
-        $this->locality = $locality;
-    }
-
     public function getPostalCode() {
         return $this->postalCode;
     }
 
     public function setPostalCode($postalCode) {
         $this->postalCode = $postalCode;
-    }
-
-    public function getRegion() {
-        return $this->region;
-    }
-
-    public function setRegion($region) {
-        $this->region = $region;
     }
 
     public function getStreetAddress() {
@@ -100,14 +73,21 @@ class Address extends ModelAbstract {
     public function setStreetAddress($streetAddress) {
         $this->streetAddress = $streetAddress;
     }
+    
+    public function getDivisionId() {
+        return $this->divisionId;
+    }
 
-//    public function getType() {
-//        return $this->type;
-//    }
-//
-//    public function setType($type) {
-//        $this->type = $type;
-//    }
+    public function setDivisionId($divisionId) {
+        $this->divisionId = $divisionId;
+    }
 
+    public function getNote() {
+        return $this->note;
+    }
+
+    public function setNote($note) {
+        $this->note = $note;
+    }
 
 }

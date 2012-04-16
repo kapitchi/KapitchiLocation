@@ -3,52 +3,37 @@
 namespace KapitchiLocation\Model\Mapper;
 
 use ZfcBase\Mapper\DbAdapterMapper,
-    ZfcBase\Model\ModelAbstract,
-    KapitchiLocation\Model\Address as Model;
+    ZfcBase\Model\ModelAbstract;
 
-class AddressDbAdapter extends DbAdapterMapper {
+class AddressDbAdapter extends DbAdapterMapper implements AddressInterface {
     
     protected $tableName = 'location_address';
+    protected $modelPrototype;
             
     public function persist(ModelAbstract $model) {
+        $table = $this->getTableGateway($this->tableName);
+        
+        $data = $this->toScalarValueArray($model);
         if($model->getId()) {
-            $ret = $this->update($model);
+            $ret = $table->update($data, array('id' => $model->getId()));
         }
         else {
-            $ret = $this->insert($model);
+            $ret = $table->insert($data);
+            $model->setId((int)$table->getLastInsertId());
         }
-        
-        return $ret;
-    }
-    
-    protected function insert(ModelAbstract $model) {
-        $table = $this->getTable();
-        
-        $data = $model->toArray();
-        
-        $ret = $table->insert($data);
-        $model->setId((int)$table->getLastInsertId());
-        
-        return $ret;
-    }
-    
-    protected function update(ModelAbstract $model) {
-        $table = $this->getTable();
-        
-        $data = $model->toArray();
-        $ret = $table->update($data, array('id' => $model->getId()));
         
         return $ret;
     }
     
     public function findByPriKey($id) {
-        $table = $this->getTable();
+        $table = $this->getTableGateway($this->tableName);
         $result = $table->select(array('id' => $id));
         $data = $result->current();
         if(!$data) {
             return null;
         }
-        $model = Model::fromArray($data->getArrayCopy());
+        $model = $this->getModelPrototype();
+        $model->exchangeArray($data->getArrayCopy());
         return $model;
     }
     
@@ -57,23 +42,16 @@ class AddressDbAdapter extends DbAdapterMapper {
         exit;
     }
     
-//    public function findByIdentityId($identityId) {
-//        $table = $this->getTableGateway($this->tableName);
-//        $result = $table->select(array('identityId' => $identityId));
-//        $data = $result->current();
-//        if(!$data) {
-//            return null;
-//        }
-//        $model = ContactModel::fromArray($data->getArrayCopy());
-//        return $model;
-//    }
-    
     public function remove(ModelAbstract $contact) {
-        var_dump($contact);
-        exit;
+        throw new \Exception('N/I');
     }
     
-    protected function getTable() {
-        return $this->getTableGateway($this->tableName);
+    public function getModelPrototype() {
+        return $this->modelPrototype;
     }
+
+    public function setModelPrototype(ModelAbstract $modelPrototype) {
+        $this->modelPrototype = $modelPrototype;
+    }
+
 }
