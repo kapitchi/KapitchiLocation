@@ -5,9 +5,10 @@ namespace KapitchiLocation\Model\Mapper;
 use ZfcBase\Mapper\DbAdapterMapper,
     ZfcBase\Model\ModelAbstract;
 
-class AddressDbAdapter extends DbAdapterMapper implements AddressInterface {
+class DivisionDbAdapter extends DbAdapterMapper implements DivisionInterface {
     
-    protected $tableName = 'location_address';
+    protected $tableName = 'location_division';
+    protected $divisionTypeTableName = 'location_division_type';
     protected $modelPrototype;
             
     public function persist(ModelAbstract $model) {
@@ -38,8 +39,21 @@ class AddressDbAdapter extends DbAdapterMapper implements AddressInterface {
     }
     
     public function getPaginatorAdapter(array $params) {
-        $this->getTableGateway($this->tableName)->setSelectResultPrototype(new \Zend\Db\ResultSet\ResultSet($this->getModelPrototype()));
-        $iterator = $this->getTableGateway($this->tableName)->select();
+        $table = $this->getTableGateway($this->tableName);
+        $table->setSelectResultPrototype(new \Zend\Db\ResultSet\ResultSet($this->getModelPrototype()));
+        $select = $table->getSqlSelectPrototype();
+        
+        if(isset($params['where']['typeHandle'])) {
+            $select->join($this->divisionTypeTableName, 'typeId', array());
+            $select->where(array(
+                $this->divisionTypeTableName . '.handle' => $params['where']['typeHandle']
+            ));
+        }
+        
+        //$select->where(array('code' => 'GBR'));
+        
+        $iterator = $table->selectWith($select);
+        
         $array = array();
         foreach($iterator as $item) {
             $array[] = $item;
@@ -47,7 +61,7 @@ class AddressDbAdapter extends DbAdapterMapper implements AddressInterface {
         return new \Zend\Paginator\Adapter\ArrayAdapter($array);
     }
     
-    public function remove(ModelAbstract $contact) {
+    public function remove(ModelAbstract $model) {
         throw new \Exception('N/I');
     }
     

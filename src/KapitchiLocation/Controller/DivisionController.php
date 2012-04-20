@@ -7,10 +7,10 @@ use Zend\Mvc\Controller\ActionController,
     
     KapitchiLocation\Module;
 
-class AddressController extends ActionController {
+class DivisionController extends ActionController {
     protected $module;
-    protected $addressService;
-    protected $addressForm;
+    protected $divisionService;
+    protected $divisionForm;
     
     public function __construct(Module $module) {
         $this->module = $module;
@@ -20,8 +20,12 @@ class AddressController extends ActionController {
         $routeMatch = $this->getEvent()->getRouteMatch();
         $page = $routeMatch->getParam('page', 1);
         
-        $paginator = $this->getAddressService()->getPaginator();
-        $paginator->setItemCountPerPage($this->getModule()->getOption('address.view.item_count_per_page', 10));
+        $paginator = $this->getDivisionService()->getPaginator(array(
+            'where' => array(
+                'typeHandle' => 'country'
+            )
+        ));
+        $paginator->setItemCountPerPage($this->getModule()->getOption('division.view.item_count_per_page', 10));
         $paginator->setCurrentPageNumber($page);
         
         return new TableViewModel(array(
@@ -30,16 +34,14 @@ class AddressController extends ActionController {
     }
     
     public function createAction() {
-        $form = $this->getAddressForm();
+        $form = $this->getDivisionForm();
         
         $request = $this->getRequest();
         if($request->isPost()) {
             $postData = $request->post()->toArray();
             if($form->isValid($postData)) {
-                $ret = $this->getAddressService()->persist($form->getValues());
-                return $this->redirect()->toRoute('default', array(
-                    'controller' => 'kapitchilocation-address',
-                    'action' => 'update',
+                $ret = $this->getDivisionService()->persist($form->getValues());
+                return $this->redirect()->toRoute('KapitchiLocation/Division/Update', array(
                     'id' => $ret['model']->getId()
                 ));
             }
@@ -50,57 +52,57 @@ class AddressController extends ActionController {
         ));
         
         $viewModel = new ViewModel(array(
-            'addressForm' => $form
+            'divisionForm' => $form
         ));
-        $viewModel->setTemplate('kapitchilocation-address/update');
+        //$viewModel->setTemplate('K/update');
         return $viewModel;
     }
     
     public function updateAction() {
-        $id = $this->getAddressId();
+        $id = $this->getDivisionId();
         if(empty($id)) {
             throw new NoIdException("No id");
         }
         
-        $form = $this->getAddressForm();
+        $form = $this->getDivisionForm();
         
         $request = $this->getRequest();
         if($request->isPost()) {
             $postData = $request->post()->toArray();
             if($form->isValid($postData)) {
-                $ret = $this->getAddressService()->persist($form->getValues());
+                $ret = $this->getDivisionService()->persist($form->getValues());
             }
         }
         
-        $identity = $this->getAddressService()->get(array(
+        $model = $this->getDivisionService()->get(array(
             'priKey' => $id
         ), true);
-        $form->populate($identity->toArray());
+        $form->populate($model->toArray());
         
         $form->addElement('submit', 'submit', array(
             'label' => 'Update'
         ));
         
         $viewModel = new ViewModel(array(
-            'addressForm' => $form
+            'divisionForm' => $form
         ));
-        $viewModel->setTemplate('address/update');
+        $viewModel->setTemplate('division/update');
         return $viewModel;
     }
     
     public function removeAction() {
-        $id = $this->getAddressId(); 
+        $id = $this->getDivisionId(); 
         if(empty($id)) {
             throw new NoIdException("No id");
         }        
         
-        $ret = $this->getAddressService()->remove($id);
+        $ret = $this->getDivisionService()->remove($id);
         
-        return $this->redirect()->toRoute('KapitchiLocation/Address/Index');        
+        return $this->redirect()->toRoute('KapitchiLocation/Division/Index');        
     }
     
     //helper methods
-    protected function getAddressId() {
+    protected function getDivisionId() {
         $routeMatch = $this->getEvent()->getRouteMatch();
         $id = $routeMatch->getParam('id');
         return $id;
@@ -122,20 +124,20 @@ class AddressController extends ActionController {
         $this->module = $module;
     }
 
-    public function getAddressService() {
-        return $this->addressService;
+    public function getDivisionService() {
+        return $this->divisionService;
     }
 
-    public function setAddressService($addressService) {
-        $this->addressService = $addressService;
+    public function setDivisionService($divisionService) {
+        $this->divisionService = $divisionService;
     }
 
-    public function getAddressForm() {
-        return $this->addressForm;
+    public function getDivisionForm() {
+        return $this->divisionForm;
     }
 
-    public function setAddressForm($addressForm) {
-        $this->addressForm = $addressForm;
+    public function setDivisionForm($divisionForm) {
+        $this->divisionForm = $divisionForm;
     }
 
 }

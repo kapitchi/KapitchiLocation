@@ -4,11 +4,11 @@ namespace KapitchiLocation\Model;
 
 use KapitchiBase\Model\TreeNodeModel;
 
-class Division extends TreeNodeModel {
+class DivisionType extends TreeNodeModel {
     protected $id;
+    protected $handle;
     protected $name;
-    protected $code;
-    
+
     public function getId() {
         return $this->id;
     }
@@ -17,20 +17,20 @@ class Division extends TreeNodeModel {
         $this->id = $id;
     }
 
+    public function getHandle() {
+        return $this->handle;
+    }
+
+    public function setHandle($handle) {
+        $this->handle = $handle;
+    }
+
     public function getName() {
         return $this->name;
     }
 
     public function setName($name) {
         $this->name = $name;
-    }
-    
-    public function getCode() {
-        return $this->code;
-    }
-
-    public function setCode($code) {
-        $this->code = $code;
     }
 
 

@@ -4,7 +4,7 @@ namespace KapitchiLocation\Service;
 
 use ZfcBase\Service\ModelServiceAbstract;
 
-class Division extends ModelServiceAbstract {
+class DivisionType extends ModelServiceAbstract {
     
 }
 

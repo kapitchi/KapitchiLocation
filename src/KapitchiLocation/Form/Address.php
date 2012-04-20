@@ -26,5 +26,8 @@ class Address extends Form {
         $this->addElement('text', 'streetAddress', array(
             'label' => 'Street address'
         ));
+        $this->addElement('textarea', 'note', array(
+            'label' => 'Note'
+        ));
     }
 }
