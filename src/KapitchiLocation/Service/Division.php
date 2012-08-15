@@ -1,10 +1,9 @@
 <?php
-
 namespace KapitchiLocation\Service;
 
-use ZfcBase\Service\ModelServiceAbstract;
+use KapitchiEntity\Service\EntityService;
 
-class Division extends ModelServiceAbstract {
+class Division extends EntityService
+{
     
 }
-

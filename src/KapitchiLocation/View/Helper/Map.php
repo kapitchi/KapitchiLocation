@@ -2,7 +2,7 @@
 
 namespace KapitchiLocation\View\Helper;
 
-use KapitchiLocation\Model\HasLatLngInterface;
+use KapitchiLocation\Entity\HasLatLngInterface;
 
 class Map {
     const ENGINE_GOOGLE = 'google';

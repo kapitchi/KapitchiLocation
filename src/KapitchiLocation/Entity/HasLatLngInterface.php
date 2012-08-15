@@ -1,6 +1,6 @@
 <?php
 
-namespace KapitchiLocation\Model;
+namespace KapitchiLocation\Entity;
 
 interface HasLatLngInterface {
     public function getLatitude();
