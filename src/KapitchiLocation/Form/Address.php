@@ -12,81 +12,81 @@ class Address extends EventManagerAwareForm
         
         $this->add(array(
             'name' => 'id',
+            'type' => 'Zend\Form\Element\Hidden',
             'options' => array(
                 'label' => 'ID',
             ),
             'attributes' => array(
-                'type' => 'hidden'
             ),
         ));
         
         $this->add(array(
             'name' => 'building',
+            'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' => 'Building number',
             ),
             'attributes' => array(
-                'type' => 'text'
             ),
         ));
         
         $this->add(array(
             'name' => 'floor',
+            'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' => 'Floor',
             ),
             'attributes' => array(
-                'type' => 'text'
             ),
         ));
         
         $this->add(array(
             'name' => 'latitude',
+            'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' => 'Latitude',
             ),
             'attributes' => array(
-                'type' => 'text'
             ),
         ));
         
         $this->add(array(
             'name' => 'longitude',
+            'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' => 'Longitude',
             ),
             'attributes' => array(
-                'type' => 'text'
             ),
         ));
         
         $this->add(array(
             'name' => 'postalCode',
+            'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' => 'Postalcode',
             ),
             'attributes' => array(
-                'type' => 'text'
             ),
         ));
         
         $this->add(array(
             'name' => 'streetAddress',
+            'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' => 'Street address',
             ),
             'attributes' => array(
-                'type' => 'text'
             ),
         ));
         
         $this->add(array(
             'name' => 'note',
+            'type' => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => 'Note',
             ),
             'attributes' => array(
-                'type' => 'textarea'
             ),
         ));
         
