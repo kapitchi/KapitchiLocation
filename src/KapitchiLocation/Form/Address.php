@@ -64,7 +64,7 @@ class Address extends EventManagerAwareForm
             'name' => 'postalCode',
             'type' => 'Zend\Form\Element\Text',
             'options' => array(
-                'label' => 'Postalcode',
+                'label' => 'Postal code',
             ),
             'attributes' => array(
             ),
@@ -77,6 +77,28 @@ class Address extends EventManagerAwareForm
                 'label' => 'Street address',
             ),
             'attributes' => array(
+            ),
+        ));
+        
+        $this->add(array(
+            'name' => 'locality',
+            'type' => 'Zend\Form\Element\Text',
+            'options' => array(
+                'label' => 'City',
+            ),
+            'attributes' => array(
+            ),
+        ));
+        
+        $this->add(array(
+            'name' => 'divisionId',
+            'type' => 'Zend\Form\Element\Select',
+            'options' => array(
+                'label' => 'Division',
+                'value_options' => array(),//needs being defined
+            ),
+            'attributes' => array(
+                
             ),
         ));
         

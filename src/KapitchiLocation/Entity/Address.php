@@ -13,6 +13,7 @@ class Address implements HasLatLngInterface {
     protected $longitude;
     protected $postalCode;
     protected $streetAddress;
+    protected $locality; //city or locality
     protected $note;
     protected $divisionId;
     
@@ -85,7 +86,17 @@ class Address implements HasLatLngInterface {
     {
         $this->streetAddress = $streetAddress;
     }
+    
+    public function getLocality()
+    {
+        return $this->locality;
+    }
 
+    public function setLocality($locality)
+    {
+        $this->locality = $locality;
+    }
+    
     public function getNote()
     {
         return $this->note;

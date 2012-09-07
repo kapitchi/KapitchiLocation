@@ -4,6 +4,7 @@ namespace KapitchiLocation;
 use Zend\ModuleManager\Feature\ControllerProviderInterface,
     Zend\ModuleManager\Feature\ServiceProviderInterface,
     KapitchiBase\ModuleManager\AbstractModule,
+    KapitchiEntity\Mapper\EntityDbAdapterMapper,
     KapitchiEntity\Mapper\EntityDbAdapterMapperOptions;
 
 class Module extends AbstractModule implements
@@ -17,12 +18,12 @@ class Module extends AbstractModule implements
                 //'KapitchiIdentity\Controller\Identity' => 'KapitchiIdentity\Controller\IdentityController',
             ),
             'factories' => array(
-//                'KapitchiIdentity\Controller\Auth' => function($sm) {
-//                    $cont = new Controller\AuthController();
-//                    $cont->setAuthService($sm->getServiceLocator()->get('KapitchiIdentity\Service\Auth'));
-//                    $cont->setLoginForm($sm->getServiceLocator()->get('KapitchiIdentity\Form\Login'));
-//                    return $cont;
-//                },
+                'KapitchiLocation\Controller\Address' => function($sm) {
+                    $cont = new Controller\AddressController();
+                    $cont->setEntityService($sm->getServiceLocator()->get('KapitchiLocation\Service\Address'));
+                    $cont->setEntityForm($sm->getServiceLocator()->get('KapitchiLocation\Form\Address'));
+                    return $cont;
+                },
             )
         );
     }
@@ -31,6 +32,9 @@ class Module extends AbstractModule implements
     {
         return array(
             'invokables' => array(
+                'KapitchiLocation\Entity\Address' => 'KapitchiLocation\Entity\Address',
+                'KapitchiLocation\Entity\Division' => 'KapitchiLocation\Entity\Division',
+                'KapitchiLocation\Entity\DivisionType' => 'KapitchiLocation\Entity\DivisionType',
             ),
             'factories' => array(
                 //Address
@@ -44,7 +48,7 @@ class Module extends AbstractModule implements
                     return $s;
                 },
                 'KapitchiLocation\Mapper\AddressDbAdapter' => function ($sm) {
-                    return new Mapper\EntityDbAdapterMapper(
+                    return new EntityDbAdapterMapper(
                         $sm->get('Zend\Db\Adapter\Adapter'),
                         new EntityDbAdapterMapperOptions(array(
                             'tableName' => 'location_address',
@@ -57,6 +61,15 @@ class Module extends AbstractModule implements
                 'KapitchiLocation\Entity\AddressHydrator' => function ($sm) {
                     return new \Zend\Stdlib\Hydrator\ClassMethods(false);
                 },
+                'KapitchiLocation\Form\Address' => function ($sm) {
+                    $ins = new Form\Address();
+                    $ins->setInputFilter($sm->get('KapitchiLocation\Form\AddressInputFilter'));
+                    return $ins;
+                },
+                'KapitchiLocation\Form\AddressInputFilter' => function ($sm) {
+                    $ins = new Form\AddressInputFilter();
+                    return $ins;
+                },
                 //Division
                 'KapitchiLocation\Service\Division' => function ($sm) {
                     $s = new Service\Division(
@@ -64,11 +77,12 @@ class Module extends AbstractModule implements
                         $sm->get('KapitchiLocation\Entity\Division'),
                         $sm->get('KapitchiLocation\Entity\DivisionHydrator')
                     );
+                    $s->setTypeService($sm->get('KapitchiLocation\Service\DivisionType'));
                     //$s->setInputFilter($sm->get('KapitchiIdentity\Entity\AuctionInputFilter'));
                     return $s;
                 },
                 'KapitchiLocation\Mapper\DivisionDbAdapter' => function ($sm) {
-                    return new Mapper\EntityDbAdapterMapper(
+                    return new EntityDbAdapterMapper(
                         $sm->get('Zend\Db\Adapter\Adapter'),
                         new EntityDbAdapterMapperOptions(array(
                             'tableName' => 'location_division',
@@ -92,7 +106,7 @@ class Module extends AbstractModule implements
                     return $s;
                 },
                 'KapitchiLocation\Mapper\DivisionTypeDbAdapter' => function ($sm) {
-                    return new Mapper\EntityDbAdapterMapper(
+                    return new EntityDbAdapterMapper(
                         $sm->get('Zend\Db\Adapter\Adapter'),
                         new EntityDbAdapterMapperOptions(array(
                             'tableName' => 'location_division_type',
