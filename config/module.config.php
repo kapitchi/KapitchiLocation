@@ -47,15 +47,15 @@ return array(
                         ),
                         'may_terminate' => false,
                         'child_routes' => array(
-                            'plugin' => array(
+                            'address' => array(
                                 'type'    => 'Segment',
                                 'options' => array(
-                                    'route'    => '/division[/:id][/:action]',
+                                    'route'    => '/address[/:id][/:action]',
                                     'constraints' => array(
                                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                                     ),
                                     'defaults' => array(
-                                        'controller' => 'Division',
+                                        'controller' => 'Address',
                                     ),
                                 ),
                             ),

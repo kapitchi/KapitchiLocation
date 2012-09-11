@@ -24,6 +24,11 @@ class Module extends AbstractModule implements
                     $cont->setEntityForm($sm->getServiceLocator()->get('KapitchiLocation\Form\Address'));
                     return $cont;
                 },
+                //API
+                'KapitchiLocation\Controller\Api\Address' => function($sm) {
+                    $cont = new Controller\Api\AddressRestfulController($sm->getServiceLocator()->get('KapitchiLocation\Service\Address'));
+                    return $cont;
+                },
             )
         );
     }
