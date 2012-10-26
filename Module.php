@@ -3,13 +3,30 @@ namespace KapitchiLocation;
 
 use Zend\ModuleManager\Feature\ControllerProviderInterface,
     Zend\ModuleManager\Feature\ServiceProviderInterface,
+    Zend\ModuleManager\Feature\ViewHelperProviderInterface,
     KapitchiBase\ModuleManager\AbstractModule,
     KapitchiEntity\Mapper\EntityDbAdapterMapper,
     KapitchiEntity\Mapper\EntityDbAdapterMapperOptions;
 
 class Module extends AbstractModule implements
-    ControllerProviderInterface, ServiceProviderInterface
+    ControllerProviderInterface, ServiceProviderInterface, ViewHelperProviderInterface
 {
+    public function getViewHelperConfig()
+    {
+        return array(
+            'invokables' => array(
+                //'KapitchiIdentity\Controller\Identity' => 'KapitchiIdentity\Controller\IdentityController',
+            ),
+            'factories' => array(
+                'locationAddress' => function($sm) {
+                    $ins = new View\Helper\Address(
+                        $sm->getServiceLocator()->get('KapitchiLocation\Service\Address')
+                    );
+                    return $ins;
+                },
+            )
+        );
+    }
     
     public function getControllerConfig()
     {

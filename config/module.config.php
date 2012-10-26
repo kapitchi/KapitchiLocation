@@ -50,7 +50,7 @@ return array(
                             'address' => array(
                                 'type'    => 'Segment',
                                 'options' => array(
-                                    'route'    => '/address[/:id][/:action]',
+                                    'route'    => '/address[/:action][/:id]',
                                     'constraints' => array(
                                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                                     ),

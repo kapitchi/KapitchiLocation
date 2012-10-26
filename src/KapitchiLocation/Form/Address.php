@@ -24,7 +24,7 @@ class Address extends EventManagerAwareForm
             'name' => 'building',
             'type' => 'Zend\Form\Element\Text',
             'options' => array(
-                'label' => 'Building number',
+                'label' => 'Building',
             ),
             'attributes' => array(
             ),
@@ -41,20 +41,10 @@ class Address extends EventManagerAwareForm
         ));
         
         $this->add(array(
-            'name' => 'latitude',
+            'name' => 'streetAddress',
             'type' => 'Zend\Form\Element\Text',
             'options' => array(
-                'label' => 'Latitude',
-            ),
-            'attributes' => array(
-            ),
-        ));
-        
-        $this->add(array(
-            'name' => 'longitude',
-            'type' => 'Zend\Form\Element\Text',
-            'options' => array(
-                'label' => 'Longitude',
+                'label' => 'Street address',
             ),
             'attributes' => array(
             ),
@@ -65,16 +55,6 @@ class Address extends EventManagerAwareForm
             'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' => 'Postal code',
-            ),
-            'attributes' => array(
-            ),
-        ));
-        
-        $this->add(array(
-            'name' => 'streetAddress',
-            'type' => 'Zend\Form\Element\Text',
-            'options' => array(
-                'label' => 'Street address',
             ),
             'attributes' => array(
             ),
@@ -107,6 +87,26 @@ class Address extends EventManagerAwareForm
             'type' => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => 'Note',
+            ),
+            'attributes' => array(
+            ),
+        ));
+        
+        $this->add(array(
+            'name' => 'latitude',
+            'type' => 'Zend\Form\Element\Text',
+            'options' => array(
+                'label' => 'Latitude',
+            ),
+            'attributes' => array(
+            ),
+        ));
+        
+        $this->add(array(
+            'name' => 'longitude',
+            'type' => 'Zend\Form\Element\Text',
+            'options' => array(
+                'label' => 'Longitude',
             ),
             'attributes' => array(
             ),

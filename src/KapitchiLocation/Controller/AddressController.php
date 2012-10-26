@@ -20,4 +20,11 @@ class AddressController extends AbstractEntityController
         ));
     }
     
+    public function lookupAction()
+    {
+        return array(
+            'iframeCallerId' => $this->getRequest()->getQuery()->get('iframeCallerId')
+        );
+    }
+    
 }
