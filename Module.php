@@ -70,7 +70,7 @@ class Module extends AbstractModule implements
                     return $s;
                 },
                 'KapitchiLocation\Mapper\AddressDbAdapter' => function ($sm) {
-                    return new EntityDbAdapterMapper(
+                    return new Mapper\AddressDbAdapter(
                         $sm->get('Zend\Db\Adapter\Adapter'),
                         new EntityDbAdapterMapperOptions(array(
                             'tableName' => 'location_address',

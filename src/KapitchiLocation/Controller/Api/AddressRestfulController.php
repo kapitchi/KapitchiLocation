@@ -2,6 +2,7 @@
 namespace KapitchiLocation\Controller\Api;
 
 use KapitchiEntity\Controller\EntityRestfulController;
+use Zend\View\Model\JsonModel;
 
 /**
  *
@@ -14,6 +15,26 @@ class AddressRestfulController extends EntityRestfulController
         $plugin = $this->plugin('datatables');
         
         $jsonModel = $plugin->createJsonViewModel($this->getEntityService());
+        return $jsonModel;
+    }
+    
+    public function autocompletelocalityAction()
+    {
+        $service = $this->getEntityService();
+        
+        $query = $this->getRequest()->getQuery();
+        
+        $items = $service->getUniqueLocalities($query->get('term'));
+        $ret = array();
+        foreach($items as $r) {
+            $arr = array(
+                'label' => $r['locality'],
+                'value' => $r['locality'],
+            );
+            $ret[] = $arr;
+        }
+        
+        $jsonModel = new JsonModel($ret);
         return $jsonModel;
     }
     

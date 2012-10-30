@@ -67,6 +67,8 @@ class Address extends EventManagerAwareForm
                 'label' => 'City',
             ),
             'attributes' => array(
+                'data-kap-ui' => 'autocomplete',
+                'data-url' => '/location/api/address/autocompletelocality',
             ),
         ));
         
