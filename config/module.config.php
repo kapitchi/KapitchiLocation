@@ -59,6 +59,18 @@ return array(
                                     ),
                                 ),
                             ),
+                            'division' => array(
+                                'type'    => 'Segment',
+                                'options' => array(
+                                    'route'    => '/division[/:action][/:id]',
+                                    'constraints' => array(
+                                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    ),
+                                    'defaults' => array(
+                                        'controller' => 'Division',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),

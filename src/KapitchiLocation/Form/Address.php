@@ -74,13 +74,13 @@ class Address extends EventManagerAwareForm
         
         $this->add(array(
             'name' => 'divisionId',
-            'type' => 'Zend\Form\Element\Select',
+            'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' => 'Division',
-                'value_options' => array(),//needs being defined
             ),
             'attributes' => array(
-                
+                'data-kap-ui' => 'autocomplete-id',
+                'data-kap-url' => '/location/api/division/autocomplete',
             ),
         ));
         

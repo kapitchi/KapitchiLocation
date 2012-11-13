@@ -24,7 +24,7 @@ class Division extends EntityService
                 ));
                 
                 if(empty($type)) {
-                    return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Null());
+                    return array();
                 }
                 
                 unset($criteria['typeHandle']);

@@ -46,6 +46,10 @@ class Module extends AbstractModule implements
                     $cont = new Controller\Api\AddressRestfulController($sm->getServiceLocator()->get('KapitchiLocation\Service\Address'));
                     return $cont;
                 },
+                'KapitchiLocation\Controller\Api\Division' => function($sm) {
+                    $cont = new Controller\Api\DivisionRestfulController($sm->getServiceLocator()->get('KapitchiLocation\Service\Division'));
+                    return $cont;
+                },
             )
         );
     }

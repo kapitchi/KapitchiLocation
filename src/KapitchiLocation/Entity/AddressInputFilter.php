@@ -44,6 +44,11 @@ class AddressInputFilter extends \KapitchiBase\InputFilter\EventManagerAwareInpu
         $this->add(array(
             'name'       => 'divisionId',
             'required'   => false,
+            'filters' => array(
+                array(
+                    'name' => 'Null'
+                )
+            )
         ));
         $this->add(array(
             'name'       => 'note',

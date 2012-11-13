@@ -8,20 +8,30 @@ use Zend\View\Model\JsonModel;
  *
  * @author Matus Zeman <mz@kapitchi.com>
  */
-class AddressRestfulController extends EntityRestfulController
+class DivisionRestfulController extends EntityRestfulController
 {
-    public function autocompletelocalityAction()
+    public function autocompleteAction()
     {
         $service = $this->getEntityService();
         
         $query = $this->getRequest()->getQuery();
         
-        $items = $service->getUniqueLocalities($query->get('term'));
+        $items = $service->getPaginatorAll(array(
+            'name LIKE ?' => "%" . $query->get('term') . "%"
+        ));
         $ret = array();
-        foreach($items as $r) {
+        foreach($items as $item) {
+            $label = $item->getName();
+            //$value = $item->getName();
+            while($item->getParentId()) {
+                $item = $service->get($item->getParentId());
+                $label .= ", " . $item->getName();
+            }
+            
             $arr = array(
-                'label' => $r['locality'],
-                'value' => $r['locality'],
+                'id' => $item->getId(),
+                'label' => $label,
+                'value' => $label,
             );
             $ret[] = $arr;
         }
