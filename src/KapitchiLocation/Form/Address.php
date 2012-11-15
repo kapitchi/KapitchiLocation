@@ -79,8 +79,7 @@ class Address extends EventManagerAwareForm
                 'label' => 'Division',
             ),
             'attributes' => array(
-                'data-kap-ui' => 'autocomplete-id',
-                'data-kap-url' => '/location/api/division/autocomplete',
+                'data-kap-ui' => 'division-autocomplete-input',
             ),
         ));
         

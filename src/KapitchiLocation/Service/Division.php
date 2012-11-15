@@ -7,6 +7,25 @@ class Division extends EntityService
 {
     protected $typeService;
     
+    public function fetchChildrenIds($entity, $includeThis = false)
+    {
+        if(!$this->isEntityInstance($entity)) {
+            $entity = $this->find($entity);
+        }
+        
+        $ret = array();
+        if($includeThis) {
+            $ret[] = $entity->getId();
+        }
+        
+        foreach($this->getPaginatorAll(array('parentId' => $entity->getId())) as $childItem) {
+            $childIds = $this->fetchChildrenIds($childItem, true);
+            $ret = array_merge($ret, $childIds);
+        }
+        
+        return $ret;
+    }
+    
     protected function attachDefaultListeners()
     {
         parent::attachDefaultListeners();

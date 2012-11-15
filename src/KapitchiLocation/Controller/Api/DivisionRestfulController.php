@@ -22,6 +22,7 @@ class DivisionRestfulController extends EntityRestfulController
         $ret = array();
         foreach($items as $item) {
             $label = $item->getName();
+            $id = $item->getId();
             //$value = $item->getName();
             while($item->getParentId()) {
                 $item = $service->get($item->getParentId());
@@ -29,7 +30,7 @@ class DivisionRestfulController extends EntityRestfulController
             }
             
             $arr = array(
-                'id' => $item->getId(),
+                'id' => $id,
                 'label' => $label,
                 'value' => $label,
             );
@@ -48,21 +49,19 @@ class DivisionRestfulController extends EntityRestfulController
         $instance = $this;
         
         $em->attach('get.post', function($e) {
-            if($e->getTarget()->getRequest()->getQuery()->get('context') == 'entity-lookup-input') {
+            $context = $e->getTarget()->getRequest()->getQuery()->get('context');
+            if($context == 'entity-lookup-input' || $context == 'autocomplete') {
                 $model = $e->getParam('jsonViewModel');
-                $entity = $model->getVariable('entity');
+                $entity = $e->getParam('entity');
+                $service = $e->getTarget()->getEntityService();
                 
-                //TODO how do we format this? using view? event?
-                $labelData = array();
-                
-                foreach(array('building', 'streetAddress', 'postalCode', 'locality') as $field) {
-                    if(!empty($entity[$field])) {
-                        $labelData[] = $entity[$field];
-                    }
+                $label = array($entity->getName());
+                while($entity->getParentId()) {
+                    $entity = $service->get($entity->getParentId());
+                    $label[] = $entity->getName();
                 }
-                $label = implode(', ', $labelData);
                 
-                $e->getParam('jsonViewModel')->label = $label;
+                $model->label = implode(', ', $label);
             }
         });
     } 
