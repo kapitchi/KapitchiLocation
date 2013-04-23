@@ -83,12 +83,9 @@ class Module extends AbstractModule implements
                 'KapitchiLocation\Mapper\AddressDbAdapter' => function ($sm) {
                     return new Mapper\AddressDbAdapter(
                         $sm->get('Zend\Db\Adapter\Adapter'),
-                        new EntityDbAdapterMapperOptions(array(
-                            'tableName' => 'location_address',
-                            'primaryKey' => 'id',
-                            'hydrator' => $sm->get('KapitchiLocation\Entity\AddressHydrator'),
-                            'entityPrototype' => $sm->get('KapitchiLocation\Entity\Address'),
-                        ))
+                        $sm->get('KapitchiLocation\Entity\Address'),
+                        $sm->get('KapitchiLocation\Entity\AddressHydrator'),
+                        'location_address'
                     );
                 },
                 'KapitchiLocation\Entity\AddressHydrator' => function ($sm) {
@@ -110,19 +107,16 @@ class Module extends AbstractModule implements
                         $sm->get('KapitchiLocation\Entity\Division'),
                         $sm->get('KapitchiLocation\Entity\DivisionHydrator')
                     );
-                    $s->setTypeService($sm->get('KapitchiLocation\Service\DivisionType'));
+                    //$s->setTypeService($sm->get('KapitchiLocation\Service\DivisionType'));
                     //$s->setInputFilter($sm->get('KapitchiIdentity\Entity\AuctionInputFilter'));
                     return $s;
                 },
                 'KapitchiLocation\Mapper\DivisionDbAdapter' => function ($sm) {
                     return new EntityDbAdapterMapper(
                         $sm->get('Zend\Db\Adapter\Adapter'),
-                        new EntityDbAdapterMapperOptions(array(
-                            'tableName' => 'location_division',
-                            'primaryKey' => 'id',
-                            'hydrator' => $sm->get('KapitchiLocation\Entity\DivisionHydrator'),
-                            'entityPrototype' => $sm->get('KapitchiLocation\Entity\Division'),
-                        ))
+                        $sm->get('KapitchiLocation\Entity\Division'),
+                        $sm->get('KapitchiLocation\Entity\DivisionHydrator'),
+                        'location_division'
                     );
                 },
                 'KapitchiLocation\Entity\DivisionHydrator' => function ($sm) {
@@ -141,12 +135,9 @@ class Module extends AbstractModule implements
                 'KapitchiLocation\Mapper\DivisionTypeDbAdapter' => function ($sm) {
                     return new EntityDbAdapterMapper(
                         $sm->get('Zend\Db\Adapter\Adapter'),
-                        new EntityDbAdapterMapperOptions(array(
-                            'tableName' => 'location_division_type',
-                            'primaryKey' => 'id',
-                            'hydrator' => $sm->get('KapitchiLocation\Entity\DivisionTypeHydrator'),
-                            'entityPrototype' => $sm->get('KapitchiLocation\Entity\DivisionType'),
-                        ))
+                        $sm->get('KapitchiLocation\Entity\DivisionType'),
+                        $sm->get('KapitchiLocation\Entity\DivisionTypeHydrator'),
+                       'location_division_type'
                     );
                 },
                 'KapitchiLocation\Entity\DivisionTypeHydrator' => function ($sm) {
