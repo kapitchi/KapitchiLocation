@@ -20,6 +20,7 @@ class AddressRestfulController extends EntityRestfulController
         $ret = array();
         foreach($items as $r) {
             $arr = array(
+                'id' => $r['locality'],
                 'label' => $r['locality'],
                 'value' => $r['locality'],
             );
@@ -29,6 +30,44 @@ class AddressRestfulController extends EntityRestfulController
         $jsonModel = new JsonModel($ret);
         return $jsonModel;
     }
+
+    public function autocompleteAction()
+    {
+        $service = $this->getEntityService();
+
+        $query = $this->getRequest()->getQuery();
+        
+        if($query->get('id')) {
+            $item = $this->renderAutocompleteItem($service->getArray($query->get('id')));
+            $jsonModel = new JsonModel($item);
+            return $jsonModel;
+        }
+        
+        $items = $service->fetchAll([
+            'fulltext' => $query->get('term')
+        ], null, function($item) use ($service) {
+            return $this->renderAutocompleteItem($service->createArrayFromEntity($item));
+        }, false);
+
+        $jsonModel = new JsonModel($items);
+        return $jsonModel;
+    }
+    
+    protected function renderAutocompleteItem($entityData)
+    {
+        $labelData = [];
+        foreach(array('building', 'streetAddress', 'postalCode', 'locality') as $field) {
+            if(!empty($entityData[$field])) {
+                $labelData[] = $entityData[$field];
+            }
+        }
+        $label = implode(', ', $labelData);
+
+        return [
+            'id' => $entityData['id'],
+            'label' => $label,
+        ];
+    }
     
     protected function attachDefaultListeners()
     {
@@ -37,7 +76,7 @@ class AddressRestfulController extends EntityRestfulController
         $em = $this->getEventManager();
         $instance = $this;
         
-        $em->attach('get.post', function($e) {
+        $em->attach('renderEntity', function($e) {
             if($e->getTarget()->getRequest()->getQuery()->get('context') == 'entity-lookup-input') {
                 $model = $e->getParam('jsonViewModel');
                 $entity = $model->getVariable('entity');
